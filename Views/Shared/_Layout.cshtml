@@ -1,51 +1,98 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - E_Commerce</title>
-    <script type="importmap"></script>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/ouput.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/E_Commerce.styles.css" asp-append-version="true" />
+    <title>@ViewData["Title"] - The Assembly</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">E_Commerce</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+<body class="bg-white">
+
+    <div class="bg-black text-white text-[10px] md:text-xs text-center py-2 px-4 font-bold tracking-[0.2em] uppercase">
+        Miễn phí vận chuyển cho đơn hàng từ 500.000đ
+    </div>
+
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 md:px-8 h-20 flex items-center justify-between">
+            
+            <nav class="hidden lg:flex space-x-10">
+                <a asp-controller="Home" asp-action="Index" class="nav-link text-sm">Trang chủ</a>
+                <a asp-controller="Products" asp-action="Index" class="nav-link text-sm">Cửa hàng</a>
+                <a href="#" class="nav-link text-sm">Nam</a>
+                <a href="#" class="nav-link text-sm">Nữ</a>
+            </nav>
+
+            <a asp-controller="Home" asp-action="Index" class="flex items-center group">
+                <div class="w-9 h-9 bg-black rounded-full flex items-center justify-center transition-transform group-hover:scale-110">
+                    <span class="text-white text-[10px] font-bold">TA</span>
+                </div>
+                <span class="ml-3 text-xl font-extrabold tracking-tighter uppercase">The Assembly</span>
+            </a>
+
+            <div class="flex items-center space-x-6 text-gray-700">
+                <button title="Tìm kiếm" class="hover:text-black transition-transform hover:scale-110">
+                    <i class="fa-solid fa-magnifying-glass text-lg"></i>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                
+                <a asp-controller="Account" asp-action="Login" title="Tài khoản" class="hover:text-black transition-transform hover:scale-110">
+                    <i class="fa-regular fa-user text-lg"></i>
+                </a>
+
+                <button title="Yêu thích" class="hidden md:block hover:text-black transition-transform hover:scale-110">
+                    <i class="fa-regular fa-heart text-lg"></i>
+                </button>
+
+                <a asp-controller="Cart" asp-action="Index" class="relative hover:text-black transition-transform hover:scale-110">
+                    <i class="fa-solid fa-cart-shopping text-lg"></i>
+                    <span class="absolute -top-2 -right-2 bg-indigo-600 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
+                        0
+                    </span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main role="main" class="min-h-screen">
+        @RenderBody()
+    </main>
+
+    <footer class="bg-gray-50 border-t border-gray-200 mt-20">
+        <div class="max-w-7xl mx-auto py-12 px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <div class="col-span-1 md:col-span-2">
+                    <h3 class="font-bold text-lg mb-4 uppercase tracking-widest">The Assembly</h3>
+                    <p class="text-gray-500 text-sm max-w-sm">Cung cấp những giải pháp thời trang bền vững và phong cách tối giản cho thế hệ mới.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm mb-4 uppercase">Hỗ trợ</h4>
+                    <ul class="text-sm text-gray-600 space-y-2">
+                        <li><a href="#" class="hover:underline">Giao hàng</a></li>
+                        <li><a href="#" class="hover:underline">Đổi trả</a></li>
+                        <li><a href="#" class="hover:underline">Liên hệ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm mb-4 uppercase">Chính sách</h4>
+                    <ul class="text-sm text-gray-600 space-y-2">
+                        <li><a href="#" class="hover:underline">Bảo mật</a></li>
+                        <li><a href="#" class="hover:underline">Điều khoản</a></li>
                     </ul>
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - E_Commerce - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div class="border-t border-gray-200 mt-12 pt-8 text-center text-xs text-gray-400">
+                &copy; @DateTime.Now.Year - The Assembly Store. All rights reserved.
+            </div>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
