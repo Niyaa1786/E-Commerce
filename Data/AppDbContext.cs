@@ -1,6 +1,12 @@
-﻿namespace E_Commerce.Data
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace E_Commerce.Data
 {
-    public class AppDbContext
+    public class AppDbContext :DbContext
     {
+        public AppDbContext(DbContextOptions options) : base(options) { }
+
+
+
     }
 }
