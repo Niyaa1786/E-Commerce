@@ -1,8 +1,30 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    Layout = "_AdminLayout";
 }
 
-<div class="bg-indigo-400">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="bg-base-100 p-8 shadow-sm">
+    <div class="flex justify-between items-center mb-8">
+        <h3 class="tracking-luxury font-black">Orders Management</h3>
+        <div class="join">
+            <input class="input input-sm input-bordered join-item focus:outline-none" placeholder="Search order ID..." />
+            <button class="btn btn-sm btn-neutral join-item uppercase text-[10px]">Search</button>
+        </div>
+    </div>
+
+    <table class="table w-full">
+        <thead class="bg-base-200/50 text-[10px] tracking-[0.2em] uppercase">
+            <tr>
+                <th>ID</th>
+                <th>Customer</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody class="text-xs">
+
+        </tbody>
+    </table>
 </div>

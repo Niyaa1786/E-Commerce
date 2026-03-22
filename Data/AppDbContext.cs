@@ -20,6 +20,16 @@ namespace E_Commerce.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.Cart)          
+                .WithOne(c => c.User)         
+                .HasForeignKey<Cart>(c => c.UserId) 
+                .OnDelete(DeleteBehavior.Cascade);
+
+        }
     }
 }

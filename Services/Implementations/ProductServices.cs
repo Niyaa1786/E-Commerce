@@ -67,7 +67,7 @@ namespace E_Commerce.Services.Implementations
             var product = await _db.Products.Where(p => p.Name!.Contains(name,StringComparison.OrdinalIgnoreCase)).FirstOrDefaultAsync();
             return product!;
         }
-
+        
         public async Task<bool> UpdateProduct(int id, UpdateProductRequest product)
         {
             try
@@ -79,25 +79,25 @@ namespace E_Commerce.Services.Implementations
                 existingProduct.Description = product.Description;
                 existingProduct.CategoryId = product.CategoryId;
 
-                foreach (var varient in product.ProductVarients!)
+                foreach (var varientReq in product.ProductVarients!)
                 {
-                    var existingVarient = existingProduct.ProductVarients!.FirstOrDefault(v => v.Id == varient.Id);
+                    var existingVarient = existingProduct.ProductVarients!.FirstOrDefault(v => v.Id == varientReq.Id);
                     if(existingVarient is not null)
                     {
-                        existingVarient.SKU = varient.SKU;
-                        existingVarient.Quantity = varient.Quantity;
-                        existingVarient.Price = varient.Price;
-                        existingVarient.Color = varient.Color;
-                        existingVarient.Size = varient.Size;
+                        existingVarient.SKU = varientReq.SKU;
+                        existingVarient.Quantity = varientReq.Quantity;
+                        existingVarient.Price = varientReq.Price;
+                        existingVarient.Color = varientReq.Color;
+                        existingVarient.Size = varientReq.Size;
                     }else
                     {
                         existingProduct.ProductVarients!.Add(new ProductVarient
                         {
-                            SKU = varient.SKU,
-                            Quantity = varient.Quantity,
-                            Price = varient.Price,
-                            Color = varient.Color,
-                            Size = varient.Size,
+                            SKU = varientReq.SKU,
+                            Quantity = varientReq.Quantity,
+                            Price = varientReq.Price,
+                            Color = varientReq.Color,
+                            Size = varientReq.Size,
                         });
                     }
                 }
