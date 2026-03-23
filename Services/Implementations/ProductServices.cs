@@ -1,8 +1,9 @@
-﻿using E_Commerce.Services.Interfaces;
-using E_Commerce.Models.Products;
+﻿using Azure.Core;
 using E_Commerce.Data;
-using Microsoft.EntityFrameworkCore;
 using E_Commerce.DTOs.ProductDTO;
+using E_Commerce.Models.Products;
+using E_Commerce.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 
 namespace E_Commerce.Services.Implementations
@@ -24,8 +25,9 @@ namespace E_Commerce.Services.Implementations
                     Name = productRequest.Name,
                     CategoryId = productRequest.CategoryId,
                     Description = productRequest.Description,
+                    ImageUrl = productRequest.ImageUrl,
 
-                        ProductVarients = productRequest.Variants!.Select(v => new ProductVarient
+                    ProductVarients = productRequest.Variants!.Select(v => new ProductVarient
                         {
                             SKU = v.SKU,
                             Price = v.Price,
@@ -78,6 +80,7 @@ namespace E_Commerce.Services.Implementations
                 existingProduct.Name = product.Name;
                 existingProduct.Description = product.Description;
                 existingProduct.CategoryId = product.CategoryId;
+                existingProduct.ImageUrl = product.ImageUrl;
 
                 foreach (var varientReq in product.ProductVarients!)
                 {

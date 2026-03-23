@@ -6,5 +6,7 @@
         public string? Description { get; set; }
         public int CategoryId { get; set; }
         public ICollection<ProductVariantRequest>? Variants { get; set; }
+        public string? ImageUrl { get; set; }
+
     }
 }
