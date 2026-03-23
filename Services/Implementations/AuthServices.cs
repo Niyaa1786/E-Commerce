@@ -21,16 +21,19 @@ namespace E_Commerce.Services.Implementations
             throw new NotImplementedException();
         }
 
-        public async Task<bool> Login(LoginRequest request)
+        public async Task<string> Login(LoginRequest request)
         {
             var user = await _userManager.FindByEmailAsync(request.Email!);
-            if (user is null) return false;
-            if(!user.IsActive) return false;
+            if (user is null || !user.IsActive) return null;
 
-            var result = await _signInManager.PasswordSignInAsync(user, request.Password!, request.RememberMe,false);
+            var result = await _signInManager.PasswordSignInAsync(user, request.Password!, request.RememberMe, false);
 
-            if (result.Succeeded) return true;
-            return false;
+            if (result.Succeeded) 
+            {
+                var roles = await _userManager.GetRolesAsync(user);
+                return roles.FirstOrDefault() ?? "Client";
+            }
+            return null;
         }
 
         public async Task Logout()
@@ -57,6 +60,7 @@ namespace E_Commerce.Services.Implementations
 
                 if (result.Succeeded)
                 {
+                    await _userManager.AddToRoleAsync(newUser, "Client");
                     return true;
                 }
                 return false;

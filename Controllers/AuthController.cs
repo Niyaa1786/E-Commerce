@@ -51,9 +51,10 @@ namespace E_Commerce.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginRequest request)
         {
-            var result = await _authServices.Login(request);
-            if (result)
+            var role = await _authServices.Login(request);
+            if (role is not null )
             {
+                if (role == "Admin") return RedirectToAction("Index","AdminHome");
                 return RedirectToAction("Index", "Home");
             }
 
