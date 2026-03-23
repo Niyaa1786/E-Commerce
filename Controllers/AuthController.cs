@@ -28,13 +28,12 @@ namespace E_Commerce.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterRequest request)
         {
-            if (!ModelState.IsValid) return View(request);
 
             var result = await _authServices.Register(request);
             if (result)
             {
                 TempData["Success"] = "Đăng ký thành công";
-                return RedirectToAction("Login");
+                return RedirectToAction("Login", "Auth");
             }
 
             ModelState.AddModelError("", "Email đã tồn tại hoặc mật khẩu chưa đủ mạnh.");
@@ -51,14 +50,20 @@ namespace E_Commerce.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginRequest request)
         {
+            if (!ModelState.IsValid) return View(request);
+
             var role = await _authServices.Login(request);
-            if (role is not null )
+
+            if (role != null)
             {
-                if (role == "Admin") return RedirectToAction("Index","AdminHome");
+
+                if (role == "Admin")
+                    return RedirectToAction("Index", "AdminHome");
+
                 return RedirectToAction("Index", "Home");
             }
 
-            ModelState.AddModelError("", "Tên đăng nhập hoặc mật khẩu không đúng");
+            ModelState.AddModelError("", "Tài khoản chưa được phân quyền hoặc sai thông tin.");
             return View(request);
         }
 

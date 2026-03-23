@@ -1,11 +1,11 @@
-﻿@model E_Commerce.DTOs.AuthDTO.RegisterRequest
-@{
-    ViewData["Title"] = "Đăng Ký";
-}
+﻿    @model E_Commerce.DTOs.AuthDTO.RegisterRequest
+    @{
+        ViewData["Title"] = "Đăng Ký";
+    }
 
 <div class="min-h-[90vh] flex items-center justify-center bg-base-100 px-4 py-16">
     <div class="w-full max-w-[450px] animate-in fade-in slide-in-from-bottom-8 duration-1000">
-        
+
         <div class="text-center mb-10">
             <span class="tracking-[0.4em] text-[9px] uppercase font-black opacity-40 block mb-3">Join The Community</span>
             <h1 class="text-4xl font-black uppercase tracking-tighter italic">Đăng ký tài khoản</h1>
@@ -14,9 +14,9 @@
         <form asp-action="Register" method="post" autocomplete="off" class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
             @if (!ViewData.ModelState.IsValid)
             {
-                <div class="col-span-full bg-error/5 p-4 border border-error/20 mb-4">
-                    <div asp-validation-summary="ModelOnly" class="text-[10px] text-error font-bold uppercase tracking-widest"></div>
-                </div>
+            <div class="col-span-full bg-error/5 p-4 border border-error/20 mb-4">
+                <div asp-validation-summary="ModelOnly" class="text-[10px] text-error font-bold uppercase tracking-widest"></div>
+            </div>
             }
 
             <div class="form-control col-span-full">
@@ -80,3 +80,7 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}
