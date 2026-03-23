@@ -1,0 +1,56 @@
+﻿@model E_Commerce.DTOs.AuthDTO.LoginRequest
+@{
+    ViewData["Title"] = "Đăng Nhập";
+}
+
+<div class="min-h-[85vh] flex items-center justify-center bg-base-100 px-4">
+    <div class="w-full max-w-[400px] animate-in fade-in slide-in-from-bottom-8 duration-1000">
+        
+        <div class="text-center mb-12">
+            <span class="tracking-[0.4em] text-[9px] uppercase font-black opacity-40 block mb-3">Welcome Back</span>
+            <h1 class="text-5xl font-black uppercase tracking-tighter italic mb-4">The Assembly</h1>
+            <p class="text-[11px] text-gray-400 tracking-widest uppercase">Đăng nhập vào tài khoản của bạn</p>
+        </div>
+
+        <form asp-action="Login" method="post" class="space-y-8">
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="bg-error/10 border-l-2 border-error p-4 mb-6">
+                    <div asp-validation-summary="ModelOnly" class="text-[11px] text-error font-bold uppercase tracking-wider"></div>
+                </div>
+            }
+
+            <div class="form-control group">
+                <label class="label px-0">
+                    <span class="label-text text-[10px] uppercase tracking-[0.2em] font-black opacity-60 group-focus-within:opacity-100 transition-opacity">Email / Username</span>
+                </label>
+                <input asp-for="Email" placeholder="example@domain.com"
+                       class="input w-full rounded-none border-0 border-b border-base-300 focus:border-neutral focus:outline-none bg-transparent px-0 transition-all duration-300" />
+                <span asp-validation-for="Email" class="text-[9px] text-error mt-1 uppercase font-bold tracking-tighter"></span>
+            </div>
+
+            <div class="form-control group">
+                <div class="flex justify-between items-center">
+                    <label class="label px-0">
+                        <span class="label-text text-[10px] uppercase tracking-[0.2em] font-black opacity-60 group-focus-within:opacity-100 transition-opacity">Password</span>
+                    </label>
+                </div>
+                <input asp-for="Password" type="password" placeholder="••••••••"
+                       class="input w-full rounded-none border-0 border-b border-base-300 focus:border-neutral focus:outline-none bg-transparent px-0 transition-all duration-300" />
+                <span asp-validation-for="Password" class="text-[9px] text-error mt-1 uppercase font-bold tracking-tighter"></span>
+            </div>
+
+            <a href="#" class="text-[9px] uppercase tracking-widest opacity-40 hover:opacity-100 transition-all">Forgot?</a>
+            <button type="submit" class="btn btn-neutral w-full rounded-full h-14 mt-4 uppercase tracking-[0.2em] text-[11px] font-black hover:scale-[1.01] active:scale-95 transition-all">
+                Sign In
+            </button>
+        </form>
+
+        <div class="mt-16 text-center border-t border-base-200 pt-8">
+            <span class="text-[10px] uppercase tracking-widest opacity-40 block mb-4">Bạn chưa có tài khoản?</span>
+            <a asp-action="Register" class="text-[11px] font-black uppercase tracking-[0.3em] border-b border-neutral pb-1 hover:opacity-50 transition-all">
+                Create Account
+            </a>
+        </div>
+    </div>
+</div>

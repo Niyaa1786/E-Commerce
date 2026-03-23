@@ -1,0 +1,82 @@
+﻿@model E_Commerce.DTOs.AuthDTO.RegisterRequest
+@{
+    ViewData["Title"] = "Đăng Ký";
+}
+
+<div class="min-h-[90vh] flex items-center justify-center bg-base-100 px-4 py-16">
+    <div class="w-full max-w-[450px] animate-in fade-in slide-in-from-bottom-8 duration-1000">
+        
+        <div class="text-center mb-10">
+            <span class="tracking-[0.4em] text-[9px] uppercase font-black opacity-40 block mb-3">Join The Community</span>
+            <h1 class="text-4xl font-black uppercase tracking-tighter italic">Đăng ký tài khoản</h1>
+        </div>
+
+        <form asp-action="Register" method="post" autocomplete="off" class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="col-span-full bg-error/5 p-4 border border-error/20 mb-4">
+                    <div asp-validation-summary="ModelOnly" class="text-[10px] text-error font-bold uppercase tracking-widest"></div>
+                </div>
+            }
+
+            <div class="form-control col-span-full">
+                <label class="label px-0">
+                    <span class="label-text text-[10px] uppercase tracking-[0.2em] font-black">Full Name</span>
+                </label>
+                <input asp-for="FullName" placeholder="TRAN MINH THANH"
+                       class="input w-full rounded-none border-0 border-b border-base-300 focus:border-neutral focus:outline-none bg-transparent px-0 transition-all" />
+                <span asp-validation-for="FullName" class="text-[9px] text-error mt-1 uppercase font-bold"></span>
+            </div>
+
+            <div class="form-control col-span-full">
+                <label class="label px-0">
+                    <span class="label-text text-[10px] uppercase tracking-[0.2em] font-black">Email Address</span>
+                </label>
+                <input asp-for="Email" type="email" placeholder="hello@assembly.com"
+                       class="input w-full rounded-none border-0 border-b border-base-300 focus:border-neutral focus:outline-none bg-transparent px-0 transition-all" />
+                <span asp-validation-for="Email" class="text-[9px] text-error mt-1 uppercase font-bold"></span>
+            </div>
+
+            <div class="form-control col-span-full">
+                <label class="label px-0">
+                    <span class="label-text text-[10px] uppercase tracking-[0.2em] font-black">Phone Number</span>
+                </label>
+                <input asp-for="PhoneNumber" placeholder="090 123 4567"
+                       class="input w-full rounded-none border-0 border-b border-base-300 focus:border-neutral focus:outline-none bg-transparent px-0 transition-all" />
+                <span asp-validation-for="PhoneNumber" class="text-[9px] text-error mt-1 uppercase font-bold"></span>
+            </div>
+
+            <div class="form-control md:col-span-1">
+                <label class="label px-0">
+                    <span class="label-text text-[10px] uppercase tracking-[0.2em] font-black">Password</span>
+                </label>
+                <input asp-for="Password" type="password" placeholder="••••••••"
+                       class="input w-full rounded-none border-0 border-b border-base-300 focus:border-neutral focus:outline-none bg-transparent px-0 transition-all" />
+                <span asp-validation-for="Password" class="text-[9px] text-error mt-1 uppercase font-bold"></span>
+            </div>
+
+            <div class="form-control md:col-span-1">
+                <label class="label px-0">
+                    <span class="label-text text-[10px] uppercase tracking-[0.2em] font-black">Confirm</span>
+                </label>
+                <input name="ConfirmPassword" type="password" placeholder="••••••••"
+                       class="input w-full rounded-none border-0 border-b border-base-300 focus:border-neutral focus:outline-none bg-transparent px-0 transition-all" />
+            </div>
+
+            <div class="col-span-full pt-8">
+                <button type="submit" class="btn btn-neutral w-full rounded-full h-14 uppercase tracking-[0.3em] text-[11px] font-black shadow-xl">
+                    Create Account
+                </button>
+                <p class="text-center mt-6 text-[10px] opacity-40 uppercase tracking-widest leading-loose">
+                    By joining, you agree to our <br /> <a href="#" class="underline">Terms of Service</a> & <a href="#" class="underline">Privacy Policy</a>
+                </p>
+            </div>
+        </form>
+
+        <div class="mt-10 text-center border-t border-base-200 pt-8">
+            <a asp-action="Login" class="text-[10px] font-black uppercase tracking-[0.3em] opacity-60 hover:opacity-100 transition-all">
+                Back to Sign In
+            </a>
+        </div>
+    </div>
+</div>

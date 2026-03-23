@@ -46,19 +46,21 @@ namespace E_Commerce.Services.Implementations
 
             var newUser = new User()
             {
-                UserName = request.UserName,
+                UserName = request.UserName ?? request.Email,
                 Email = request.Email,
                 PhoneNumber = request.PhoneNumber,
                 FullName = request.FullName
             };
 
-            var result = await _userManager.CreateAsync(newUser, request.Password!);
+            try {
+                var result = await _userManager.CreateAsync(newUser, request.Password!);
 
-            if (result.Succeeded)
-            {
-                return true;
-            }
-            return false;
+                if (result.Succeeded)
+                {
+                    return true;
+                }
+                return false;
+            } catch { return false; }
         }
     }
 }
