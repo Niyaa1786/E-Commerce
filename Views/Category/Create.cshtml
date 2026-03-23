@@ -1,0 +1,53 @@
+﻿@model E_Commerce.DTOs.CategoryDTO.CategoryRequest
+@{
+    ViewData["Title"] = "Thêm Danh mục";
+    Layout = "_AdminLayout";
+}
+
+<div class="max-w-3xl mx-auto py-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
+    <nav class="mb-12 flex items-center gap-3 text-[9px] font-black uppercase tracking-[0.4em] opacity-20">
+        <a asp-action="Index" class="hover:opacity-100 transition-opacity">Danh mục</a>
+        <span class="text-[8px]">/</span>
+        <span class="opacity-100 text-black">Tạo mới</span>
+    </nav>
+
+    <div class="bg-white border border-gray-100 p-10 md:p-16 shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
+        <header class="mb-16">
+            <span class="text-[10px] uppercase tracking-[0.5em] font-bold text-black/20 block mb-4">Nhập liệu hệ thống</span>
+            <h1 class="text-4xl font-black uppercase tracking-tighter italic scale-y-110 origin-left">
+                Tạo danh mục mới
+            </h1>
+        </header>
+
+        <form asp-action="Create" method="post" autocomplete="off" class="space-y-16">
+            @Html.AntiForgeryToken()
+            
+            <div asp-validation-summary="ModelOnly" class="text-[10px] text-error font-bold uppercase tracking-widest mb-6"></div>
+
+            <div class="form-control group">
+                <label class="label px-0 mb-2">
+                    <span class="label-text text-[10px] uppercase tracking-[0.4em] font-black opacity-20 group-focus-within:opacity-100 transition-all duration-500">Tên phân loại sản phẩm</span>
+                </label>
+                <input asp-for="Name"
+                       placeholder="VÍ DỤ: ESSENTIALS"
+                       class="input w-full rounded-none border-0 border-b border-gray-200 focus:border-black focus:outline-none bg-transparent px-0 text-xl tracking-[0.1em] uppercase font-light transition-all duration-500" />
+                <span asp-validation-for="Name" class="text-[9px] text-error mt-3 uppercase font-black tracking-widest opacity-80"></span>
+            </div>
+
+            <div class="pt-8 flex flex-col md:flex-row gap-6">
+                <button type="submit" class="btn btn-neutral rounded-none flex-1 h-14 uppercase tracking-[0.3em] text-[10px] font-black shadow-2xl hover:bg-black transition-all">
+                    Xác nhận khởi tạo
+                </button>
+                <a asp-action="Index" class="btn btn-ghost rounded-none h-14 uppercase tracking-[0.3em] text-[10px] font-black opacity-20 hover:opacity-100">
+                    Hủy bỏ
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

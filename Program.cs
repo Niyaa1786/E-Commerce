@@ -16,6 +16,9 @@ builder.Services.AddIdentity<User,IdentityRole<int>>(   ).AddEntityFrameworkStor
 
 builder.Services.AddScoped<IProductServices, ProductServices>();
 builder.Services.AddScoped<IAuthServices, AuthServices>();
+builder.Services.AddScoped<ICategoryServices, CategoryServices>();
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
