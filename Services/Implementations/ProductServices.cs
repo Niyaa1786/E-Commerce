@@ -54,13 +54,13 @@ namespace E_Commerce.Services.Implementations
 
         public async Task<IEnumerable<Product>> GetAllProducts()
         {
-            var products = await _db.Products.Include(p => p.ProductVarients).ToListAsync();
+            var products = await _db.Products.Include(p => p.ProductVarients).Include(c => c.Category).ToListAsync();
             return products;
         }
 
         public async Task<Product> GetProductById(int id)
         {
-            var product = await _db.Products.Include(p => p.ProductVarients).FirstOrDefaultAsync(p => p.Id == id);
+            var product = await _db.Products.Include(p => p.ProductVarients).Include(c => c.Category).FirstOrDefaultAsync(p => p.Id == id);
             return product!;
         }
 

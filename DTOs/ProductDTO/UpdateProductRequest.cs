@@ -12,6 +12,6 @@ namespace E_Commerce.DTOs.ProductDTO
 
         public int CategoryId { get; set; }
         public Category? Category { get; set; }
-        public ICollection<ProductVariantRequest>? ProductVarients { get; set; }
+        public List<ProductVariantRequest>? ProductVarients { get; set; }
     }
 }

@@ -1,0 +1,81 @@
+﻿@model E_Commerce.DTOs.ProductDTO.CreateProductRequest
+@{
+    ViewData["Title"] = "Thêm Sản phẩm";
+    Layout = "_AdminLayout";
+}
+
+<div class="max-w-4xl mx-auto py-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
+    <nav class="mb-12 flex items-center gap-3 text-[9px] font-black uppercase tracking-[0.4em] opacity-20">
+        <a asp-action="Index" class="hover:opacity-100">Sản phẩm</a>
+        <span>/</span>
+        <span class="text-black opacity-100">Tạo mới</span>
+    </nav>
+
+    <form asp-action="Create" method="post" class="space-y-8">
+        @Html.AntiForgeryToken()
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2 space-y-8">
+                <div class="bg-white border border-gray-100 p-10 shadow-sm space-y-12">
+                    <header class="border-b border-gray-50 pb-8">
+                        <h1 class="text-3xl font-black uppercase tracking-tighter italic">Thông tin chung</h1>
+                    </header>
+
+                    <div class="form-control">
+                        <label class="label text-[9px] uppercase tracking-[0.4em] font-black opacity-30">Tên sản phẩm</label>
+                        <input asp-for="Name" class="input w-full rounded-none border-0 border-b border-gray-100 focus:border-black focus:outline-none px-0 text-lg uppercase tracking-widest font-light transition-all" />
+                        <span asp-validation-for="Name" class="text-[9px] text-error mt-2 uppercase font-black tracking-widest"></span>
+                    </div>
+
+                    <div class="form-control">
+                        <label class="label text-[9px] uppercase tracking-[0.4em] font-black opacity-30">Mô tả chi tiết</label>
+                        <textarea asp-for="Description" rows="4" class="textarea w-full rounded-none border-0 border-b border-gray-100 focus:border-black focus:outline-none px-0 text-sm font-light resize-none transition-all"></textarea>
+                    </div>
+                </div>
+                
+                <div class="bg-white border border-gray-100 p-10 shadow-sm">
+                    <h3 class="text-[10px] uppercase tracking-[0.4em] font-black mb-8 border-b border-gray-50 pb-4">Biến thể đầu tiên</h3>
+                    <div class="grid grid-cols-2 gap-8">
+                        <div class="form-control">
+                            <label class="label text-[9px] uppercase tracking-[0.3em] font-black opacity-30">Giá (VND)</label>
+                            <input name="Variants[0].Price" type="number" class="input w-full rounded-none border-0 border-b border-gray-100 focus:border-black focus:outline-none px-0 font-light" />
+                        </div>
+                        <div class="form-control">
+                            <label class="label text-[9px] uppercase tracking-[0.3em] font-black opacity-30">Số lượng kho</label>
+                            <input name="Variants[0].Quantity" type="number" class="input w-full rounded-none border-0 border-b border-gray-100 focus:border-black focus:outline-none px-0 font-light" />
+                        </div>
+                        <div class="form-control">
+                            <label class="label text-[9px] uppercase tracking-[0.3em] font-black opacity-30">Mã SKU</label>
+                            <input name="Variants[0].SKU" class="input w-full rounded-none border-0 border-b border-gray-100 focus:border-black focus:outline-none px-0 font-light uppercase" />
+                        </div>
+                        <div class="form-control">
+                            <label class="label text-[9px] uppercase tracking-[0.3em] font-black opacity-30">Màu sắc</label>
+                            <input name="Variants[0].Color" class="input w-full rounded-none border-0 border-b border-gray-100 focus:border-black focus:outline-none px-0 font-light" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-8">
+                <div class="bg-white border border-gray-100 p-10 shadow-sm">
+                    <div class="form-control mb-8">
+                        <label class="label text-[9px] uppercase tracking-[0.4em] font-black opacity-30">Danh mục</label>
+                        <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="select select-ghost w-full rounded-none border-0 border-b border-gray-100 focus:border-black focus:outline-none px-0 font-bold text-[11px] uppercase tracking-widest"></select>
+                    </div>
+
+                    <div class="form-control">
+                        <label class="label text-[9px] uppercase tracking-[0.4em] font-black opacity-30">Đường dẫn ảnh (URL)</label>
+                        <input asp-for="ImageUrl" class="input w-full rounded-none border-0 border-b border-gray-100 focus:border-black focus:outline-none px-0 text-[10px] font-light italic" />
+                    </div>
+                </div>
+
+                <div class="flex flex-col gap-4">
+                    <button type="submit" class="btn btn-neutral rounded-none h-16 uppercase tracking-[0.3em] text-[10px] font-black shadow-2xl">
+                        Xác nhận lưu
+                    </button>
+                    <a asp-action="Index" class="btn btn-ghost rounded-none h-14 uppercase tracking-[0.3em] text-[10px] font-black opacity-30">Hủy</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

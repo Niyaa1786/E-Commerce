@@ -1,5 +1,108 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IEnumerable<E_Commerce.Models.Products.Product>
+    @{
+    ViewData["Title"] = "The Assembly - Store";
     Layout = "_Layout";
-}
+    }
 
+    <div class="bg-[#F8FAFC] min-h-screen font-['Inter'] antialiased text-slate-900">
+
+        <section class="relative h-[60vh] flex items-center bg-slate-900 overflow-hidden">
+            <div class="absolute inset-0 opacity-40">
+                <img src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?q=80&w=2000" class="w-full h-full object-cover" alt="Banner">
+            </div>
+            <div class="relative z-10 px-6 md:px-20 w-full max-w-[1600px] mx-auto">
+                <div class="max-w-2xl space-y-6">
+                    <span class="text-emerald-400 text-[10px] font-black uppercase tracking-[0.5em]">New Season / 2026</span>
+                    <h1 class="text-5xl md:text-7xl font-extrabold text-white tracking-tighter leading-none">
+                        NÂNG TẦM <br /> <span class="italic text-emerald-500">PHONG CÁCH</span>
+                    </h1>
+                    <p class="text-slate-400 text-sm md:text-base max-w-md font-medium">
+                        Khám phá bộ sưu tập tối giản được chế tác từ những chất liệu cao cấp nhất.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-20 px-6 md:px-10 max-w-[1600px] mx-auto">
+
+            <div class="flex flex-col md:flex-row justify-between items-center mb-16 gap-6 border-b border-slate-200 pb-8">
+                <h2 class="text-2xl font-black uppercase tracking-tight flex items-center gap-3">
+                    <span class="w-8 h-[2px] bg-emerald-500"></span>
+                    Tất cả sản phẩm
+                </h2>
+                <div class="flex items-center gap-8 text-[11px] font-bold uppercase tracking-widest text-slate-400">
+                    <button class="text-emerald-600 border-b-2 border-emerald-600 pb-2">Mới nhất</button>
+                    <button class="hover:text-slate-900 transition-all pb-2">Phổ biến</button>
+                    <button class="hover:text-slate-900 transition-all pb-2">Giá thấp - cao</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                @foreach (var item in Model)
+                {
+                <div class="group bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-2xl hover:shadow-slate-200/60 transition-all duration-500 overflow-hidden flex flex-col">
+
+                    <div class="relative aspect-[3/4] overflow-hidden bg-slate-50">
+                        <a asp-action="Details" asp-route-id="@item.Id" class="block h-full w-full">
+                            <img src="@item.ImageUrl" alt="@item.Name"
+                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 ease-out"
+                                 onerror="this.src='https://placehold.co/600x800?text=THE+ASSEMBLY'">
+                        </a>
+
+                        <div class="absolute top-4 left-4 flex flex-col gap-2">
+                            <span class="bg-white/90 backdrop-blur-md text-slate-900 text-[9px] font-black px-3 py-1.5 rounded-full shadow-sm uppercase tracking-widest">
+                                New Arrival
+                            </span>
+                        </div>
+
+                        <div class="absolute inset-x-4 bottom-4 translate-y-12 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                            <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] shadow-lg flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-cart-plus text-sm"></i>
+                                Thêm vào giỏ
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="p-6 flex flex-col flex-1 justify-between space-y-4">
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center">
+                                <span class="text-[10px] font-bold text-emerald-600 uppercase tracking-widest">
+                                    @(item.Category?.Name ?? "Essentials")
+                                </span>
+                                <span class="text-xs font-black text-slate-900">
+                                    @(item.ProductVarients?.FirstOrDefault()?.Price.ToString("N0") ?? "---")đ
+                                </span>
+                            </div>
+                            <a asp-action="Details" asp-route-id="@item.Id" class="block">
+                                <h3 class="text-[15px] font-bold text-slate-800 tracking-tight leading-tight group-hover:text-emerald-600 transition-colors line-clamp-1">
+                                    @item.Name
+                                </h3>
+                            </a>
+                            <p class="text-[11px] text-slate-400 font-medium line-clamp-2 leading-relaxed">
+                                @item.Description
+                            </p>
+                        </div>
+
+                        <div class="pt-4 border-t border-slate-50 flex items-center gap-3">
+                            <a asp-action="Details" asp-route-id="@item.Id" class="flex-1 text-center py-2.5 text-[10px] font-black uppercase tracking-widest border border-slate-200 rounded-lg hover:bg-slate-50 transition-all text-slate-600">
+                                Chi tiết
+                            </a>
+                            <button class="w-10 h-10 flex items-center justify-center rounded-lg border border-slate-100 hover:bg-red-50 hover:border-red-100 group/fav transition-all">
+                                <i class="fa-regular fa-heart text-slate-300 group-hover/fav:text-red-500 transition-colors"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+        </section>
+
+        <section class="py-20 bg-slate-900 text-center">
+            <h3 class="text-white text-xl font-bold uppercase tracking-[0.3em] mb-6">Kết nối với The Assembly</h3>
+            <div class="flex justify-center gap-8 text-white/40 text-sm font-black uppercase tracking-widest">
+                <a href="#" class="hover:text-emerald-400 transition-colors">Instagram</a>
+                <a href="#" class="hover:text-emerald-400 transition-colors">Facebook</a>
+                <a href="#" class="hover:text-emerald-400 transition-colors">TikTok</a>
+            </div>
+        </section>
+    </div>

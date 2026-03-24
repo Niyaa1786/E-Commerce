@@ -1,0 +1,112 @@
+﻿@model E_Commerce.DTOs.ProductDTO.UpdateProductRequest
+@{
+    ViewData["Title"] = "Cập nhật Sản phẩm";
+    Layout = "_AdminLayout";
+}
+
+<div class="max-w-5xl mx-auto py-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
+    <nav class="mb-12 flex items-center gap-3 text-[9px] font-black uppercase tracking-[0.4em] opacity-20">
+        <a asp-action="Index" class="hover:opacity-100 transition-opacity">Sản phẩm</a>
+        <span>/</span>
+        <span class="text-black opacity-100">Chỉnh sửa thông tin</span>
+    </nav>
+
+    <form asp-action="Edit" asp-route-id="@ViewContext.RouteData.Values["id"]" method="post" class="space-y-10">
+        @Html.AntiForgeryToken()
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+            
+            <div class="lg:col-span-2 space-y-10">
+                <div class="bg-white border border-gray-100 p-10 md:p-14 shadow-sm">
+                    <header class="mb-12 border-l-4 border-black pl-6">
+                        <span class="text-[9px] uppercase tracking-[0.5em] font-bold text-black/20 block mb-2">Thông tin định danh</span>
+                        <h1 class="text-3xl font-black uppercase tracking-tighter italic scale-y-110 origin-left">Sửa sản phẩm</h1>
+                    </header>
+
+                    <div class="space-y-12">
+                        <div class="form-control group">
+                            <label class="label px-0 text-[9px] uppercase tracking-[0.4em] font-black opacity-20 group-focus-within:opacity-100 transition-all">Tên sản phẩm</label>
+                            <input asp-for="Name" class="input w-full rounded-none border-0 border-b border-gray-100 focus:border-black focus:outline-none px-0 text-xl font-light tracking-widest uppercase transition-all duration-500" />
+                            <span asp-validation-for="Name" class="text-[9px] text-error mt-2 uppercase font-black tracking-widest"></span>
+                        </div>
+
+                        <div class="form-control group">
+                            <label class="label px-0 text-[9px] uppercase tracking-[0.4em] font-black opacity-20 group-focus-within:opacity-100 transition-all">Mô tả sản phẩm</label>
+                            <textarea asp-for="Description" rows="3" class="textarea w-full rounded-none border-0 border-b border-gray-100 focus:border-black focus:outline-none px-0 text-sm font-light leading-relaxed transition-all"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white border border-gray-100 p-10 shadow-sm">
+                    <div class="flex justify-between items-center mb-10 pb-4 border-b border-gray-50">
+                        <h3 class="text-[10px] uppercase tracking-[0.4em] font-black">Danh sách biến thể</h3>
+                        <span class="text-[9px] font-bold opacity-30 italic">@Model.ProductVarients?.Count mục</span>
+                    </div>
+
+                    <div class="space-y-8">
+                        @for (int i = 0; i < Model.ProductVarients?.Count; i++)
+                        {
+                            <div class="p-6 bg-[#FBFBFB] border border-gray-50 flex flex-wrap gap-6 items-end">
+                                <input type="hidden" asp-for="ProductVarients[i].Id" />
+                                
+                                <div class="form-control w-full md:w-[120px]">
+                                    <label class="text-[8px] uppercase font-black opacity-20 mb-2">SKU</label>
+                                    <input asp-for="ProductVarients[i].SKU" class="bg-transparent border-b border-gray-200 focus:border-black outline-none text-[10px] font-bold tracking-widest uppercase py-1" />
+                                </div>
+
+                                <div class="form-control w-[80px]">
+                                    <label class="text-[8px] uppercase font-black opacity-20 mb-2">Giá</label>
+                                    <input asp-for="ProductVarients[i].Price" type="number" class="bg-transparent border-b border-gray-200 focus:border-black outline-none text-[10px] font-bold py-1" />
+                                </div>
+
+                                <div class="form-control w-[60px]">
+                                    <label class="text-[8px] uppercase font-black opacity-20 mb-2">Số lượng</label>
+                                    <input asp-for="ProductVarients[i].Quantity" type="number" class="bg-transparent border-b border-gray-200 focus:border-black outline-none text-[10px] font-bold py-1" />
+                                </div>
+
+                                <div class="form-control w-[80px]">
+                                    <label class="text-[8px] uppercase font-black opacity-20 mb-2">Màu/Size</label>
+                                    <div class="flex gap-2">
+                                        <input asp-for="ProductVarients[i].Color" placeholder="Color" class="w-full bg-transparent border-b border-gray-100 text-[9px] py-1" />
+                                        <input asp-for="ProductVarients[i].Size" placeholder="Size" class="w-full bg-transparent border-b border-gray-100 text-[9px] py-1" />
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-10">
+                <div class="bg-white border border-gray-100 p-10 shadow-sm space-y-10">
+                    <div class="form-control">
+                        <label class="label text-[9px] uppercase tracking-[0.4em] font-black opacity-20">Phân loại</label>
+                        <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="select select-ghost w-full rounded-none border-0 border-b border-gray-100 focus:border-black focus:outline-none px-0 font-bold text-[11px] uppercase tracking-[0.2em]"></select>
+                    </div>
+
+                    <div class="form-control">
+                        <label class="label text-[9px] uppercase tracking-[0.4em] font-black opacity-20">Ảnh đại diện (URL)</label>
+                        <input asp-for="ImageUrl" class="input w-full rounded-none border-0 border-b border-gray-100 focus:border-black focus:outline-none px-0 text-[10px] font-light italic" />
+                        <div class="mt-6 aspect-[3/4] bg-gray-50 border border-gray-100 overflow-hidden group">
+                            <img src="@Model.ImageUrl" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" id="previewImg" onerror="this.src='https://placehold.co/400x600?text=PREVIEW'" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col gap-4">
+                    <button type="submit" class="btn btn-neutral rounded-none h-16 uppercase tracking-[0.3em] text-[10px] font-black shadow-2xl hover:bg-black transition-all">
+                        Cập nhật thay đổi
+                    </button>
+                    <a asp-action="Index" class="btn btn-ghost rounded-none h-14 uppercase tracking-[0.3em] text-[10px] font-black opacity-20 hover:opacity-100">Hủy bỏ</a>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
