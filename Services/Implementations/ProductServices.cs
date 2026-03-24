@@ -37,7 +37,7 @@ namespace E_Commerce.Services.Implementations
                         }).ToList()
                 };
 
-                _db.Add(product);
+                _db.Products.Add(product);
                 await _db.SaveChangesAsync();
                 return true;
             }catch{ return false; }
@@ -64,7 +64,7 @@ namespace E_Commerce.Services.Implementations
             return product!;
         }
 
-        public async Task<Product> GetProductByName(string name)
+        public async Task<Product> GetProductByName(string name)    
         {
             var product = await _db.Products.Where(p => p.Name!.Contains(name,StringComparison.OrdinalIgnoreCase)).FirstOrDefaultAsync();
             return product!;
@@ -92,16 +92,6 @@ namespace E_Commerce.Services.Implementations
                         existingVarient.Price = varientReq.Price;
                         existingVarient.Color = varientReq.Color;
                         existingVarient.Size = varientReq.Size;
-                    }else
-                    {
-                        existingProduct.ProductVarients!.Add(new ProductVarient
-                        {
-                            SKU = varientReq.SKU,
-                            Quantity = varientReq.Quantity,
-                            Price = varientReq.Price,
-                            Color = varientReq.Color,
-                            Size = varientReq.Size,
-                        });
                     }
                 }
                 await _db.SaveChangesAsync();

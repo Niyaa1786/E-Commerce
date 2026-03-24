@@ -1,0 +1,113 @@
+﻿@model IEnumerable<E_Commerce.DTOs.CartDTO.CartItemResponse>
+@{
+    ViewData["Title"] = "Giỏ hàng";
+    Layout = "_Layout";
+    
+    decimal subTotal = Model.Sum(item => item.Price * item.Quantity);
+    decimal shippingFee = (subTotal > 1000000m || subTotal == 0) ? 0m : 30000m;
+    decimal total = subTotal + shippingFee;
+}
+
+<div class="bg-[#F8FAFC] min-h-screen font-['Inter'] antialiased text-slate-900 pt-28 pb-20">
+    <div class="max-w-[1400px] mx-auto px-6">
+        
+        <header class="mb-12">
+            <h1 class="text-4xl font-black uppercase tracking-tighter italic">Túi đồ của bạn</h1>
+            <div class="flex items-center gap-4 mt-2">
+                <span class="h-[2px] w-12 bg-emerald-500"></span>
+                <p class="text-[10px] font-bold uppercase tracking-[0.3em] opacity-40">
+                    Đang có <span class="text-slate-900">@Model.Count()</span> sản phẩm
+                </p>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            
+            <div class="lg:col-span-8 space-y-4">
+                @if (!Model.Any())
+                {
+                    <div class="bg-white border border-dashed border-slate-200 py-32 text-center rounded-[2rem]">
+                        <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fa-solid fa-cart-shopping text-2xl text-slate-200"></i>
+                        </div>
+                        <p class="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400">Giỏ hàng của bạn đang trống</p>
+                        <a href="/" class="mt-8 inline-block bg-slate-900 text-white px-8 py-4 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-emerald-600 transition-all">
+                            Quay lại cửa hàng
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    @foreach (var item in Model)
+                    {
+                        <div class="group bg-white border border-slate-100 p-6 rounded-[2rem] flex flex-col md:flex-row items-center gap-8 transition-all hover:shadow-2xl hover:shadow-slate-200/50">
+                            <div class="w-28 h-36 bg-slate-50 rounded-2xl overflow-hidden shrink-0 border border-slate-50">
+                                <img src="@item.ImageUrl" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onerror="this.src='https://placehold.co/300x400?text=NO+IMAGE'" />
+                            </div>
+
+                            <div class="flex-1 w-full space-y-4">
+                                <div class="flex justify-between items-start">
+                                    <div class="space-y-1">
+                                        <h3 class="text-sm font-black uppercase tracking-tight text-slate-800">@item.ProductName</h3>
+                                        <div class="flex gap-4">
+                                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Size: <span class="text-slate-900">@item.Size</span></span>
+                                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Color: <span class="text-slate-900">@item.Color</span></span>
+                                        </div>
+                                    </div>
+                                    <p class="font-black text-sm text-emerald-600">@item.Price.ToString("N0")đ</p>
+                                </div>
+
+                                <div class="flex items-center justify-between pt-4">
+                                    <div class="flex items-center gap-4 bg-slate-50 px-4 py-2 rounded-lg border border-slate-100">
+                                        <span class="text-[9px] font-black uppercase text-slate-400">Số lượng:</span>
+                                        <span class="text-xs font-black">@item.Quantity</span>
+                                    </div>
+
+                                    <form asp-action="Remove" asp-route-id="@item.Id" method="post">
+                                        <button type="submit" class="group/del flex items-center gap-2 text-[9px] font-black uppercase tracking-widest text-slate-300 hover:text-red-500 transition-colors">
+                                            <i class="fa-solid fa-trash-can group-hover/del:animate-bounce"></i>
+                                            Gỡ khỏi túi
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+
+            <div class="lg:col-span-4">
+                <div class="bg-white border border-slate-100 p-10 rounded-[2.5rem] sticky top-32 shadow-xl shadow-slate-200/30">
+                    <h2 class="text-xl font-black uppercase tracking-tighter italic mb-8">Chi tiết đơn hàng</h2>
+                    
+                    <div class="space-y-5">
+                        <div class="flex justify-between text-[11px] font-bold uppercase tracking-widest text-slate-400">
+                            <span>Tạm tính</span>
+                            <span class="text-slate-900">@subTotal.ToString("N0")đ</span>
+                        </div>
+                        <div class="flex justify-between text-[11px] font-bold uppercase tracking-widest text-slate-400">
+                            <span>Phí vận chuyển</span>
+                            <span class="text-slate-900">@(shippingFee == 0 ? "MIỄN PHÍ" : shippingFee.ToString("N0") + "đ")</span>
+                        </div>
+                        
+                        <div class="h-[1px] bg-slate-100 w-full my-4"></div>
+
+                        <div class="flex justify-between items-end pt-2">
+                            <span class="text-[10px] font-black uppercase tracking-[0.3em] text-slate-900">Thanh toán</span>
+                            <div class="text-right">
+                                <p class="text-3xl font-black text-slate-900 leading-none">@total.ToString("N0")đ</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-10">
+                        <button class="w-full bg-slate-900 text-white py-5 rounded-2xl text-[11px] font-black uppercase tracking-[0.2em] hover:bg-emerald-600 transition-all shadow-lg shadow-slate-200 active:scale-95">
+                            Thanh toán an toàn
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

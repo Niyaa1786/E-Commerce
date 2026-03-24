@@ -45,15 +45,19 @@
                     <div class="relative aspect-[3/4] overflow-hidden bg-slate-50">
                         <a asp-controller="Product" asp-action="Details" asp-route-id="@item.Id" class="block h-full w-full">
                             <img src="@item.ImageUrl" alt="@item.Name"
-                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 ease-out"
-                                 onerror="this.src='https://placehold.co/600x800?text=THE+ASSEMBLY'">
+                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 ease-out" />
                         </a>
 
                         <div class="absolute inset-x-4 bottom-4 translate-y-12 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-                            <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] shadow-lg flex items-center justify-center gap-2">
-                                <i class="fa-solid fa-cart-plus text-sm"></i>
-                                Thêm vào giỏ
-                            </button>
+                            <form asp-controller="Cart" asp-action="Add" method="post">
+                                <input type="hidden" name="ProductVarientId" value="@item.ProductVarients.First().Id" />
+                                <input type="hidden" name="Quantity" value="1" />
+
+                                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] shadow-lg flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-cart-plus text-sm"></i>
+                                    Thêm vào giỏ
+                                </button>
+                            </form>
                         </div>
                     </div>
 

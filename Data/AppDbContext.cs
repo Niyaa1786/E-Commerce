@@ -29,7 +29,7 @@ namespace E_Commerce.Data
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Cart)          
                 .WithOne(c => c.User)         
-                .HasForeignKey<Cart>(c => c.UserId) 
+                .HasForeignKey<Cart>(c => c.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
         }

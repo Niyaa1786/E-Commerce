@@ -19,8 +19,7 @@
             
             <div class="lg:col-span-7 space-y-6">
                 <div class="relative aspect-[3/4] overflow-hidden bg-slate-50 rounded-3xl border border-slate-100 group">
-                    <img id="mainImage" src="@Model.ImageUrl" alt="@Model.Name"
-                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                    <img id="mainImage" src="@Model.ImageUrl" alt="@Model.Name" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                     
                     <button class="absolute top-6 right-6 w-12 h-12 bg-white/80 backdrop-blur-md rounded-full flex items-center justify-center shadow-sm hover:bg-white transition-all">
                         <i class="fa-solid fa-expand text-slate-600"></i>
@@ -31,24 +30,19 @@
                     <div class="aspect-square rounded-xl overflow-hidden border-2 border-emerald-500 cursor-pointer">
                         <img src="@Model.ImageUrl" class="w-full h-full object-cover" />
                     </div>
-                    @* Thêm các ảnh phụ ở đây nếu có data *@
                 </div>
             </div>
 
             <div class="lg:col-span-5 space-y-10 lg:sticky lg:top-32 h-fit">
                 
                 <div class="space-y-4">
-                    <span class="text-emerald-600 text-[11px] font-black uppercase tracking-[0.5em]">
-                        @(Model.Category?.Name ?? "Essentials")
-                    </span>
-                    <h1 class="text-4xl md:text-5xl font-black uppercase tracking-tighter italic leading-none">
+                    <h1 class="text-4xl md:text-5xl font-black uppercase tracking-tighter leading-none">
                         @Model.Name
                     </h1>
                     <div class="flex items-baseline gap-4">
                         <span id="displayPrice" class="text-3xl font-bold text-slate-900">
                             @(Model.ProductVarients?.FirstOrDefault()?.Price.ToString("N0") ?? "---")đ
                         </span>
-                        <span class="text-slate-400 text-sm line-through">@( (Model.ProductVarients?.FirstOrDefault()?.Price * 1.2m)?.ToString("N0") )đ</span>
                     </div>
                 </div>
 
@@ -83,20 +77,21 @@
                     </div>
                 </div>
 
-                <div class="pt-6 space-y-4">
-                    <div class="flex gap-4">
-                        <div class="w-32 h-14 border border-slate-200 rounded-2xl flex items-center justify-between px-4">
-                            <button class="text-slate-400 hover:text-slate-900 transition-colors"><i class="fa-solid fa-minus"></i></button>
-                            <span class="font-bold">1</span>
-                            <button class="text-slate-400 hover:text-slate-900 transition-colors"><i class="fa-solid fa-plus"></i></button>
-                        </div>
-                        <button class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white h-14 rounded-2xl font-black uppercase tracking-[0.2em] text-[11px] shadow-xl shadow-emerald-200 transition-all active:scale-95">
+                <div class="pt-6 flex gap-4">
+                    <div class="w-32 h-14 border border-slate-200 rounded-2xl flex items-center justify-between px-4">
+                        <button type="button" class="text-slate-400 hover:text-slate-900 transition-colors"><i class="fa-solid fa-minus"></i></button>
+                        <span class="font-bold">1</span>
+                        <button type="button" class="text-slate-400 hover:text-slate-900 transition-colors"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+
+                    <form asp-controller="Cart" asp-action="Add" method="post" class="flex-1">
+                        <input type="hidden" name="ProductVarientId" value="@Model.ProductVarients?.FirstOrDefault()?.Id" />
+                        <input type="hidden" name="Quantity" value="1" />
+        
+                        <button type="submit" class="w-full h-14 bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl font-black uppercase tracking-[0.2em] text-[11px] shadow-xl shadow-emerald-200 transition-all active:scale-95">
                             Thêm vào giỏ hàng
                         </button>
-                    </div>
-                    <button class="w-full h-14 border-2 border-slate-900 text-slate-900 rounded-2xl font-black uppercase tracking-[0.2em] text-[11px] hover:bg-slate-900 hover:text-white transition-all">
-                        Mua ngay
-                    </button>
+                    </form>
                 </div>
 
                 <div class="pt-10 border-t border-slate-100">
