@@ -1,0 +1,41 @@
+﻿@model IEnumerable<E_Commerce.Models.Orders.Order>
+@{
+    ViewData["Title"] = "Lịch sử mua hàng";
+}
+
+<div class="bg-[#F8FAFC] min-h-screen pt-28 pb-20 font-['Inter']">
+    <div class="max-w-[1200px] mx-auto px-6">
+        <header class="mb-12 border-l-4 border-slate-900 pl-6">
+            <h1 class="text-4xl font-black uppercase tracking-tighter italic">Đơn hàng của bạn</h1>
+            <p class="text-[10px] font-bold uppercase tracking-[0.4em] opacity-40 mt-2">Theo dõi hành trình mua sắm</p>
+        </header>
+
+        <div class="space-y-6">
+            @foreach (var order in Model)
+            {
+                <div class="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm hover:shadow-xl hover:shadow-slate-200/40 transition-all flex flex-col md:flex-row justify-between items-center gap-8">
+                    <div class="space-y-2">
+                        <div class="flex items-center gap-4">
+                            <span class="text-xs font-black uppercase tracking-widest text-slate-400">Mã đơn:</span>
+                            <span class="text-sm font-black text-slate-900">#@order.Id</span>
+                            <span class="px-3 py-1 bg-amber-50 text-amber-600 text-[9px] font-black uppercase rounded-full">@order.Status</span>
+                        </div>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                            Ngày đặt: <span class="text-slate-600">@order.CreatedAt.ToString("dd/MM/yyyy HH:mm")</span>
+                        </p>
+                    </div>
+
+                    <div class="text-center md:text-right space-y-2">
+                        <p class="text-[10px] font-black uppercase tracking-widest text-slate-400">Tổng thanh toán</p>
+                        <p class="text-xl font-black text-slate-900">@order.TotalAmount.ToString("N0")đ</p>
+                    </div>
+
+                    <a asp-action="GetOrderDetail" asp-route-id="@order.Id"
+                           class="px-8 py-3 bg-slate-50 hover:bg-slate-900 hover:text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all border border-slate-100">
+                        Chi tiết đơn
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,12 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using E_Commerce.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace E_Commerce.Controllers
 {
     public class AdminHomeController : Controller
     {
-        public IActionResult Index()
+        private readonly IOrderServices _orderServices;
+
+        public AdminHomeController(IOrderServices orderServices)
         {
-            return View();
+            _orderServices = orderServices;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            // LẤY  THỰC TẾ Ở ĐÂY
+            var orders = await _orderServices.GetAllOrders();
+
+            return View(orders);
         }
     }
 }

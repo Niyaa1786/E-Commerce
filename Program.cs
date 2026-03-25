@@ -18,6 +18,7 @@ builder.Services.AddScoped<IProductServices, ProductServices>();
 builder.Services.AddScoped<IAuthServices, AuthServices>();
 builder.Services.AddScoped<ICategoryServices, CategoryServices>();
 builder.Services.AddScoped<ICartServices, CartServices>();
+builder.Services.AddScoped<IOrderServices,OrderServices>();
 
 
 

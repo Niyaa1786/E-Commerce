@@ -1,29 +1,90 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IEnumerable<E_Commerce.Models.Orders.Order>
+    @{
+    ViewData["Title"] = "Quản lý Đơn hàng";
     Layout = "_AdminLayout";
-}
 
-<div class="bg-base-100 p-8 shadow-sm">
-    <div class="flex justify-between items-center mb-8">
-        <h3 class="tracking-luxury font-black">Orders Management</h3>
-        <div class="join">
-            <input class="input input-sm input-bordered join-item focus:outline-none" placeholder="Search order ID..." />
-            <button class="btn btn-sm btn-neutral join-item uppercase text-[10px]">Search</button>
+    // Khởi tạo list rỗng nếu Model null để tránh crash page
+    var safeModel = Model ?? new List<E_Commerce.Models.Orders.Order>
+        ();
+
+        var totalOrders = safeModel.Count();
+        var pendingOrders = safeModel.Count(o => o.Status == "Pending");
+        var totalRevenue = safeModel.Any() ? safeModel.Sum(o => o.TotalAmount) : 0;
+        }
+
+        <div class="space-y-6 font-['Inter'] antialiased text-slate-900 p-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm">
+                    <p class="text-[10px] font-black uppercase tracking-widest opacity-40">Tổng doanh thu</p>
+                    <h3 class="text-2xl font-black text-emerald-600">@totalRevenue.ToString("N0")đ</h3>
+                </div>
+                <div class="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm">
+                    <p class="text-[10px] font-black uppercase tracking-widest opacity-40">Tổng đơn hàng</p>
+                    <h3 class="text-2xl font-black">@totalOrders</h3>
+                </div>
+                <div class="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm">
+                    <p class="text-[10px] font-black uppercase tracking-widest opacity-40 text-slate-900">Chờ duyệt</p>
+                    <h3 class="text-2xl font-black text-amber-500">@pendingOrders</h3>
+                </div>
+            </div>
+
+            <div class="bg-white border border-slate-200 rounded-[2rem] overflow-hidden shadow-sm">
+                <div class="p-6 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
+                    <h3 class="font-black text-xs uppercase tracking-widest italic">Lịch sử giao dịch</h3>
+                    <span class="bg-emerald-50 text-emerald-600 px-3 py-1 rounded-full text-[9px] font-black uppercase">Dữ liệu thực</span>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="table w-full border-collapse">
+                        <thead>
+                            <tr class="text-[10px] font-black uppercase tracking-[0.15em] opacity-50 border-b border-slate-100 bg-white">
+                                <th class="py-6 pl-10 text-left">Mã đơn</th>
+                                <th class="text-left">Ngày đặt</th>
+                                <th class="text-left">Địa chỉ giao hàng</th>
+                                <th class="text-left">Tổng tiền</th>
+                                <th class="text-left pr-10">Trạng thái</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-[11px] font-bold tracking-tight">
+                            @if (!safeModel.Any())
+                            {
+                            <tr>
+                                <td colspan="5" class="py-32 text-center">
+                                    <i class="fa-solid fa-inbox text-4xl opacity-10 mb-4 block"></i>
+                                    <span class="opacity-30 uppercase tracking-[0.3em]">Không có dữ liệu đơn hàng</span>
+                                </td>
+                            </tr>
+                            }
+                            else
+                            {
+                            @foreach (var order in safeModel.OrderByDescending(o => o.CreatedAt))
+                            {
+                            <tr class="hover:bg-slate-50/80 transition-all border-b border-slate-50">
+                                <td class="py-5 pl-10 font-black text-slate-400">#@order.Id</td>
+                                <td class="opacity-60 font-medium">
+                                    @order.CreatedAt.ToString("dd/MM/yyyy HH:mm")
+                                </td>
+                                <td class="max-w-[300px] truncate opacity-70 font-medium">
+                                    @(string.IsNullOrEmpty(order.ShippingAddress) ? "Chưa cập nhật" : order.ShippingAddress)
+                                </td>
+                                <td class="text-emerald-600 font-black">
+                                    @order.TotalAmount.ToString("N0")đ
+                                </td>
+                                <td class="pr-10">
+                                    @if (order.Status == "Pending")
+                                    {
+                                    <span class="text-amber-500 uppercase tracking-tighter">● Chờ duyệt</span>
+                                    }
+                                    else
+                                    {
+                                    <span class="text-slate-400 uppercase tracking-tighter">● @(order.Status ?? "N/A")</span>
+                                    }
+                                </td>
+                            </tr>
+                            }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-    </div>
-
-    <table class="table w-full">
-        <thead class="bg-base-200/50 text-[10px] tracking-[0.2em] uppercase">
-            <tr>
-                <th>ID</th>
-                <th>Customer</th>
-                <th>Total</th>
-                <th>Status</th>
-                <th>Date</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody class="text-xs">
-        </tbody>
-    </table>
-</div>

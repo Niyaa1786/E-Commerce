@@ -1,0 +1,58 @@
+﻿@{
+    ViewData["Title"] = "Thanh toán";
+}
+
+<div class="bg-[#F8FAFC] min-h-screen pt-28 pb-20 font-['Inter']">
+    <div class="max-w-[900px] mx-auto px-6">
+        <div class="bg-white rounded-[2.5rem] shadow-xl shadow-slate-200/60 overflow-hidden border border-slate-100">
+            <div class="grid grid-cols-1 md:grid-cols-12">
+                
+                <div class="md:col-span-7 p-10 md:p-16 border-r border-slate-50">
+                    <header class="mb-12">
+                        <h1 class="text-3xl font-black uppercase tracking-tighter text-slate-900">Thanh toán</h1>
+                        <p class="text-[10px] font-bold uppercase tracking-[0.3em] text-emerald-500 mt-2">Bước cuối cùng để hoàn tất</p>
+                    </header>
+
+                    <form asp-action="Checkout" method="post" class="space-y-8">
+                        <div class="space-y-4">
+                            <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-2">Địa chỉ giao hàng</label>
+                            <textarea name="shippingAddress" rows="4" required
+                                      placeholder="Nhập địa chỉ chính xác của bạn..."
+                                      class="w-full bg-slate-50 border border-slate-100 rounded-2xl p-6 text-sm font-medium focus:bg-white focus:border-emerald-500 outline-none transition-all focus:ring-4 focus:ring-emerald-500/5"></textarea>
+                            <span class="text-red-500 text-[10px] font-bold italic">@Html.ValidationSummary(true)</span>
+                        </div>
+
+                        <div class="pt-6">
+                            <button type="submit" class="w-full bg-slate-900 text-white py-5 rounded-2xl text-[11px] font-black uppercase tracking-[0.3em] hover:bg-emerald-600 transition-all shadow-lg active:scale-95 flex items-center justify-center gap-3">
+                                <i class="fa-solid fa-check-double opacity-50"></i>
+                                Xác nhận đặt hàng
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="md:col-span-5 bg-slate-50 p-10 md:p-16 flex flex-col justify-center space-y-8">
+                    <div class="space-y-2">
+                        <h3 class="text-[11px] font-black uppercase tracking-widest text-slate-400">Phương thức</h3>
+                        <p class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                            <i class="fa-solid fa-money-bill-wave text-emerald-600"></i>
+                            Thanh toán khi nhận hàng (COD)
+                        </p>
+                    </div>
+                    <div class="space-y-2">
+                        <h3 class="text-[11px] font-black uppercase tracking-widest text-slate-400">Vận chuyển</h3>
+                        <p class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                            <i class="fa-solid fa-truck-fast text-slate-400"></i>
+                            Giao hàng tiêu chuẩn (2-4 ngày)
+                        </p>
+                    </div>
+                    <div class="pt-8 border-t border-slate-200">
+                        <p class="text-[9px] text-slate-400 leading-relaxed font-medium uppercase tracking-tighter">
+                            Đảm bảo quyền lợi khách hàng. Kiểm tra hàng trước khi thanh toán.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
