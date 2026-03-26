@@ -32,6 +32,7 @@ namespace E_Commerce.Data
                 .HasForeignKey<Cart>(c => c.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            SeedData.Seed(modelBuilder);
         }
     }
 }
